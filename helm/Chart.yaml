@@ -26,6 +26,6 @@ dependencies:
   - name: argo-cd
     version: 9.2.4
     repository: https://argoproj.github.io/argo-helm
-  - name: falco
-    version: 7.0.2
-    repository: https://falcosecurity.github.io/charts
+  # - name: falco
+  # version: 7.0.2
+  # repository: https://falcosecurity.github.io/charts
