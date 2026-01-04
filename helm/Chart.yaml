@@ -28,4 +28,4 @@ dependencies:
   #   repository: https://charts.helm.sh/stable
   - name: argocd
     version: 9.2.4
-    repository: https://argoproj.github.io/argo-helm
+    repository: https://argoproj.github.io/argocd
