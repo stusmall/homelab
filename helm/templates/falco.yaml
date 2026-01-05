@@ -9,10 +9,11 @@ spec:
     repoURL: https://falcosecurity.github.io/charts
     chart: falco
     targetRevision: 7.0.2
+    helm:
+      values:
+        namespaceOverride: "falco"
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-  values:
-    namespaceOverride: "falco"
