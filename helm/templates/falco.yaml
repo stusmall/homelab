@@ -14,7 +14,7 @@ spec:
         namespaceOverride: "falco"
   destination:
     server: https://kubernetes.default.svc
+    namespace: falco
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - Validate=true
