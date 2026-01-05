@@ -1,2 +1,2 @@
-falco:
-  namespaceOverride: "falco"
+# falco:
+#   namespaceOverride: "falco"
