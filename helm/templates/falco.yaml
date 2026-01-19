@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: falco
-  namespace: argocd
+  namespace: falco
 spec:
   project: default
   source:
@@ -11,7 +11,7 @@ spec:
     targetRevision: 7.0.1
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: falco
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
