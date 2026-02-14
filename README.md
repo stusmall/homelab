@@ -19,5 +19,5 @@ kubectl -n argocd delete secrets argocd-initial-admin-secret
 kubectl port-forward -n argocd services/argocd-server 8080:443
 argocd login --insecure  localhost:8080
 argocd account update-password
-argocd app create apps   --dest-server https://kubernetes.default.svc     --repo https://github.com/stusmall/homelab.git     --path helm
+argocd app create apps --dest-server https://kubernetes.default.svc --repo https://github.com/stusmall/homelab.git --path helm
 argocd app sync apps
