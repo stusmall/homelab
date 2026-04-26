@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://helm.elastic.co
     chart: eck-operator
-    targetRevision: 0.18.2
+    targetRevision: 3.3.2
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
