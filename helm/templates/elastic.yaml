@@ -36,7 +36,7 @@ metadata:
   name: kibana
   namespace: elastic
 spec:
-  version: 9.3.3
+  version: 9.2.1
   count: 1
   elasticsearchRef:
     name: elastic-cluster
