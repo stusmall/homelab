@@ -18,3 +18,22 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: example-cluster
+spec:
+  version: 8.11.0
+  nodeSets:
+    - name: default
+      count: 1
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: example-kibana
+spec:
+  version: 8.11.0
+  elasticsearchRef:
+    name: example-cluster
