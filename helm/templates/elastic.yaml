@@ -25,7 +25,7 @@ metadata:
   name: elastic-cluster
   namespace: elastic
 spec:
-  version: 9.3.3
+  version: 9.3.0
   nodeSets:
     - name: default
       count: 1
