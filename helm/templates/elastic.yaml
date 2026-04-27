@@ -37,6 +37,6 @@ metadata:
   namespace: elastic
 spec:
   version: 9.2.1
-  count: 2
+  count: 1
   elasticsearchRef:
     name: elastic-cluster
