@@ -40,3 +40,40 @@ spec:
   count: 1
   elasticsearchRef:
     name: elastic-cluster
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-agent
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.elastic.co
+    chart: elastic
+    targetRevision: 9.3.3
+    helm:
+      values: |
+        agent:
+          outputs:
+            elasticsearch:
+              hosts: ["http://elastic-cluster-es-http.elastic.svc.cluster.local:9200"]
+              api_key: "EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q"
+              # Optional: Disable SSL verification in dev
+              ssl:
+                verification_mode: none
+        # Enable built-in Kubernetes integration
+        kubernetes:
+          enabled: true
+        # Disable Fleet to use standalone mode
+        fleet:
+          enabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elastic-agent
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
