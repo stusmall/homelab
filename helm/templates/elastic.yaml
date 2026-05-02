@@ -50,7 +50,7 @@ spec:
   project: default
   source:
     repoURL: https://helm.elastic.co
-    chart: elastic
+    chart: elastic-agent
     targetRevision: 9.3.3
     helm:
       values: |
@@ -70,7 +70,7 @@ spec:
           enabled: false
   destination:
     server: https://kubernetes.default.svc
-    namespace: elastic-agent
+    namespace: elastic
   syncPolicy:
     automated:
       prune: true
