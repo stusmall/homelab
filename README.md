@@ -21,3 +21,5 @@ argocd login --insecure  localhost:8080
 argocd account update-password
 argocd app create apps --dest-server https://kubernetes.default.svc --repo https://github.com/stusmall/homelab.git --path helm
 argocd app sync apps
+kubectl get secrets --namespace elastic elastic-cluster-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode; echo
+kubectl port-forward --namespace elastic  service/kibana-kb-http 5601

@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-agent
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.elastic.co # Elastic Helm repository
+    chart: elastic-agent
+    targetRevision: "^7.17.0" # Use desired version
+    helm:
+      values: |
+        agent:
+          outputs:
+            elasticsearch:
+              hosts: ["http://elasticsearch-es-http.default.svc.cluster.local:9200"]
+              api_key: "DuOT6p0BnX8ErKTLHIFp:FdeYb5gHieAzw2PIfVVnww"
+              # Optional: Disable SSL verification in dev
+               ssl:
+                 verification_mode: none
+        # Enable built-in Kubernetes integration
+        kubernetes:
+          enabled: true
+        # Disable Fleet to use standalone mode
+        fleet:
+          enabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elastic-agent
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
