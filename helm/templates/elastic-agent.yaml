@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://helm.elastic.co # Elastic Helm repository
+    repoURL: https://helm.elastic.co
     chart: elastic-agent
-    targetRevision: "^7.17.0" # Use desired version
+    targetRevision: 9.3.3
     helm:
       values: |
         agent:
