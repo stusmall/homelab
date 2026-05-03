@@ -58,7 +58,7 @@ spec:
           default:
             type: ESPlainAuthAPI
             url: https://elastic-cluster-es-http.elastic.svc.cluster.local:9200
-            api_key: EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q
+            api_key: yuPo7p0BnX8ErKTLP4Et:Jqh7lKx0BPHUvlYFI-eMHg
             ssl:
               verificationMode: none
         system:
