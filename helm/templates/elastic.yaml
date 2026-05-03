@@ -54,20 +54,18 @@ spec:
     targetRevision: 9.3.3
     helm:
       values: |
-        agent:
-          outputs:
-            default:
-              type: ESPlainAuthAPI
-              url: http://elastic-cluster-es-http.elastic.svc.cluster.local:9200
-              api_key: EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q
-              # Optional: Disable SSL verification in dev
-              ssl:
-                verification_mode: none
+        outputs:
+          default:
+            type: ESPlainAuthAPI
+            url: https://elastic-cluster-es-http.elastic.svc.cluster.local:9200
+            api_key: EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q
+            # Optional: Disable SSL verification in dev
+            ssl:
+              verification_mode: none
         system:
           enabled: true
         kubernetes:
           enabled: true
-        # Disable Fleet to use standalone mode
         fleet:
           enabled: false
   destination:
