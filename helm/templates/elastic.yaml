@@ -56,13 +56,15 @@ spec:
       values: |
         agent:
           outputs:
-            elasticsearchcanary:
-              hosts: ["http://elastic-cluster-es-http.elastic.svc.cluster.local:9200"]
-              api_key: "EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q"
+            default:
+              type: ESPlainAuthAPI
+              url: http://elastic-cluster-es-http.elastic.svc.cluster.local:9200
+              api_key: "EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q
               # Optional: Disable SSL verification in dev
               ssl:
                 verification_mode: none
-        # Enable built-in Kubernetes integration
+        system:
+          enabled: true
         kubernetes:
           enabled: true
         # Disable Fleet to use standalone mode
