@@ -19,6 +19,23 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: elastic-http-certificate
+  namespace: elastic
+spec:
+  secretName: elastic-http-certs-internal
+  subject:
+    organizations:
+      - elastic
+  commonName: elastic-cluster-es-http.elastic.svc.cluster.local
+  dnsNames:
+    - elastic-cluster-es-http.elastic.svc.cluster.local
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer
+---
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
@@ -53,20 +70,30 @@ spec:
     chart: elastic-agent
     targetRevision: 9.3.3
     helm:
+      # I should update this to internal http?
       values: |
         outputs:
           default:
             type: ESPlainAuthAPI
             url: https://elastic-cluster-es-http.elastic.svc.cluster.local:9200
             api_key: yuPo7p0BnX8ErKTLP4Et:Jqh7lKx0BPHUvlYFI-eMHg
-            ssl:
-              verificationMode: none
         system:
           enabled: true
         kubernetes:
           enabled: true
         fleet:
           enabled: false
+        extraVolumeMounts:
+          - name: elastic-ca
+            mountPath: /usr/share/elastic-agent/certs
+            readOnly: true
+        extraVolumes:
+          - name: elastic-ca
+            secret:
+              secretName: elastic-http-certs-internal  # From cert-manager Certificate
+              items:
+                - key: ca.crt
+                  path: ca.crt
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
