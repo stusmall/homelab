@@ -59,9 +59,8 @@ spec:
             type: ESPlainAuthAPI
             url: https://elastic-cluster-es-http.elastic.svc.cluster.local:9200
             api_key: EOO66p0BnX8ErKTLPIGI:Ey52qvp8PTxKUKh5-XNW9Q
-            # Optional: Disable SSL verification in dev
             ssl:
-              verification_mode: none
+              verificationMode: none
         system:
           enabled: true
         kubernetes:
