@@ -27,6 +27,8 @@ kind: Certificate
 metadata:
   name: elastic-http-certificate
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -1
 spec:
   secretName: elastic-http-certs-internal
   subject:
@@ -44,6 +46,8 @@ kind: Elasticsearch
 metadata:
   name: elastic-cluster
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -1
 spec:
   version: 9.3.0
   nodeSets:
@@ -55,6 +59,8 @@ kind: Kibana
 metadata:
   name: kibana
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -1
 spec:
   version: 9.2.1
   count: 1
