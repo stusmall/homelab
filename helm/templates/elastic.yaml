@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: elastic
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   project: default
   source:
@@ -11,7 +13,7 @@ spec:
     targetRevision: 3.3.2
     helm:
       values: |
-        installCRDs: true
+        installCRDs=true
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
