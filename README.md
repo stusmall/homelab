@@ -12,14 +12,12 @@ To run:
 
 Bootstrapping argoCD
 
-minikube start -m 20gb
+minikube start --cpus='6' -m 32gb
 helm install argocd argo/argo-cd --namespace argocd  --create-namespace
 kubectl apply -f helm/templates/argocd.yaml
 kubectl port-forward -n argocd services/argocd-server 8080:443
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-argocd login --insecure  localhost:8080
-kubectl -n argocd delete secrets argocd-initial-admin-secret
-argocd account update-password
+argocd login --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure localhost:8080
+#TODO: delete password and update it
 argocd app create apps --dest-server https://kubernetes.default.svc --repo https://github.com/stusmall/homelab.git --path helm
 argocd app sync apps
 kubectl get secrets --namespace elastic elastic-cluster-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode; echo

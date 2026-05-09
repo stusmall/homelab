@@ -4,7 +4,7 @@ metadata:
   name: elastic
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-1" # Needed to get CRDs deployed
+    argocd.argoproj.io/sync-wave: "-5" # Needed to get CRDs deployed
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # Needed to get CRDs deployed
 spec:
   project: default
@@ -25,10 +25,11 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: selfsigned-elastic-issuer
+  name: selfsigned-issuer
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -1
+    argocd.argoproj.io/sync-wave: "-4" # Depended on by Certificate
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -5
 spec:
   selfSigned: {}
 ---
@@ -38,7 +39,7 @@ metadata:
   name: elastic-http-certificate
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -1
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -5
 spec:
   secretName: elastic-http-certs-internal
   subject:
@@ -59,7 +60,7 @@ metadata:
   name: elastic-cluster
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -1
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
   version: 9.3.0
   nodeSets:
@@ -72,7 +73,7 @@ metadata:
   name: kibana
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -1
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
   version: 9.2.1
   count: 1
