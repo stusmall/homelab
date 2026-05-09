@@ -23,6 +23,16 @@ spec:
       - CreateNamespace=true
 ---
 apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-elastic-issuer
+  namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -1
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: elastic-http-certificate
@@ -34,11 +44,13 @@ spec:
   subject:
     organizations:
       - elastic
-  commonName: elastic-cluster-es-http.elastic.svc.cluster.local
   dnsNames:
+    - elastic-cluster-es-http
+    - elastic-cluster-es-http.elastic.svc
     - elastic-cluster-es-http.elastic.svc.cluster.local
+  isCA: false
   issuerRef:
-    name: selfsigned-issuer
+    name: selfsigned-elastic-issuer
     kind: Issuer
 ---
 apiVersion: elasticsearch.k8s.elastic.co/v1

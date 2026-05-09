@@ -12,6 +12,7 @@ To run:
 
 Bootstrapping argoCD
 
+minikube start -m 20gb
 helm install argocd argo/argo-cd --namespace argocd  --create-namespace
 kubectl apply -f helm/templates/argocd.yaml
 kubectl port-forward -n argocd services/argocd-server 8080:443
