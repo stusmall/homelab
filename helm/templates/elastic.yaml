@@ -110,14 +110,26 @@ spec:
           enabled: true
         fleet:
           enabled: false
-        extraVolumeMounts:
-          - name: elastic-ca
-            mountPath: /usr/share/elastic-agent/certs
-            readOnly: true
-        extraVolumes:
-          - name: elastic-ca
-            secret:
-              secretName: elastic-cluster-es-cert  # From cert-manager Certificate
+        agent:
+          presets:
+            perNode:
+              extraVolumeMounts:
+                - name: elastic-ca
+                  mountPath: /usr/share/elastic-agent/certs
+                  readOnly: true
+              extraVolumes:
+                - name: elastic-ca
+                  secret:
+                    secretName: elastic-cluster-es-cert
+            clusterWide:
+              extraVolumeMounts:
+                - name: elastic-ca
+                  mountPath: /usr/share/elastic-agent/certs
+                  readOnly: true
+              extraVolumes:
+                - name: elastic-ca
+                  secret:
+                    secretName: elastic-cluster-es-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
