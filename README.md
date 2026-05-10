@@ -12,7 +12,7 @@ To run:
 
 Bootstrapping argoCD
 
-minikube start --cpus='6' -m 32gb
+minikube start --cpus='4' -m 20gb
 minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
 minikube stop
 minikube start 
