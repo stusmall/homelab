@@ -22,39 +22,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ---
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: selfsigned-issuer
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-4" # Depended on by Certificate and needs CRD installed at -5
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -5
-spec:
-  selfSigned: {}
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: elastic-cluster-es-cert
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-4" # Depended on by Certificate
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -5
-spec:
-  secretName: elastic-cluster-es-cert
-  subject:
-    organizations:
-      - elastic
-  dnsNames:
-    - elastic-cluster-es-http
-    - elastic-cluster-es-http.elastic.svc
-    - elastic-cluster-es-http.elastic.svc.cluster.local
-  isCA: false
-  issuerRef:
-    name: selfsigned-issuer
-    kind: Issuer
----
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
@@ -67,10 +34,6 @@ spec:
   nodeSets:
     - name: default
       count: 1
-  http:
-    tls:
-      certificate:
-        secretName: elastic-cluster-es-cert
 ---
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
@@ -122,7 +85,7 @@ spec:
               extraVolumes:
                 - name: elastic-ca
                   secret:
-                    secretName: elastic-cluster-es-cert
+                    secretName: elastic-cluster-es-http-certs-public
             clusterWide:
               extraVolumeMounts:
                 - name: elastic-ca
@@ -131,7 +94,7 @@ spec:
               extraVolumes:
                 - name: elastic-ca
                   secret:
-                    secretName: elastic-cluster-es-cert
+                    secretName: elastic-cluster-es-http-certs-public
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
