@@ -13,6 +13,9 @@ To run:
 Bootstrapping argoCD
 
 minikube start --cpus='6' -m 32gb
+minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
+minikube stop
+minikube start 
 helm install argocd argo/argo-cd --namespace argocd  --create-namespace
 kubectl apply -f helm/templates/argocd.yaml
 kubectl port-forward -n argocd services/argocd-server 8080:443

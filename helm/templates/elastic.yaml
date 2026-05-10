@@ -28,7 +28,7 @@ metadata:
   name: selfsigned-issuer
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-4" # Depended on by Certificate
+    argocd.argoproj.io/sync-wave: "-4" # Depended on by Certificate and needs CRD installed at -5
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -5
 spec:
   selfSigned: {}
@@ -36,12 +36,13 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: elastic-http-certificate
+  name: elastic-cluster-es-cert
   namespace: elastic
   annotations:
+    argocd.argoproj.io/sync-wave: "-4" # Depended on by Certificate
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in syncwave -5
 spec:
-  secretName: elastic-http-certs-internal
+  secretName: elastic-cluster-es-cert
   subject:
     organizations:
       - elastic
@@ -112,7 +113,7 @@ spec:
         extraVolumes:
           - name: elastic-ca
             secret:
-              secretName: elastic-http-certs-internal  # From cert-manager Certificate
+              secretName: elastic-cluster-es-cert  # From cert-manager Certificate
               items:
                 - key: ca.crt
                   path: ca.crt
