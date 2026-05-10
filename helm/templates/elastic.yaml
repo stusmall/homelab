@@ -52,7 +52,7 @@ spec:
     - elastic-cluster-es-http.elastic.svc.cluster.local
   isCA: false
   issuerRef:
-    name: selfsigned-elastic-issuer
+    name: selfsigned-issuer
     kind: Issuer
 ---
 apiVersion: elasticsearch.k8s.elastic.co/v1
