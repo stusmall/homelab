@@ -118,9 +118,6 @@ spec:
           - name: elastic-ca
             secret:
               secretName: elastic-cluster-es-cert  # From cert-manager Certificate
-              items:
-                - key: ca.crt
-                  path: ca.crt
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
