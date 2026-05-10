@@ -104,6 +104,8 @@ spec:
             type: ESPlainAuthAPI
             url: https://elastic-cluster-es-http.elastic.svc.cluster.local:9200
             api_key: yuPo7p0BnX8ErKTLP4Et:Jqh7lKx0BPHUvlYFI-eMHg
+            ssl:
+              certificateAuthorities: /usr/share/elastic-agent/certs/ca.crt
         system:
           enabled: true
         kubernetes:
