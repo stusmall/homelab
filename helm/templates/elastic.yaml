@@ -86,7 +86,7 @@ spec:
               extraVolumes:
                 - name: elastic-ca
                   secret:
-                    secretName: elastic-cluster-es-remote-ca
+                    secretName: elastic-cluster-es-http-ca-internal
             clusterWide:
               extraVolumeMounts:
                 - name: elastic-ca
@@ -95,7 +95,7 @@ spec:
               extraVolumes:
                 - name: elastic-ca
                   secret:
-                    secretName: elastic-cluster-es-remote-ca
+                    secretName: elastic-cluster-es-http-ca-internal
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
