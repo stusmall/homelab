@@ -68,7 +68,8 @@ spec:
             url: https://elastic-cluster-es-http.elastic.svc.cluster.local:9200
             api_key: yuPo7p0BnX8ErKTLP4Et:Jqh7lKx0BPHUvlYFI-eMHg
             ssl:
-              certificateAuthorities: /usr/share/elastic-agent/certs/ca.crt
+              certificateAuthorities:
+                - /usr/share/elastic-agent/certs/ca.crt
         system:
           enabled: true
         kubernetes:
@@ -80,7 +81,7 @@ spec:
             perNode:
               extraVolumeMounts:
                 - name: elastic-ca
-                  mountPath: /usr/share/elastic-agent/certs/ca.crt
+                  mountPath: /usr/share/elastic-agent/certs/
                   readOnly: true
               extraVolumes:
                 - name: elastic-ca
@@ -89,7 +90,7 @@ spec:
             clusterWide:
               extraVolumeMounts:
                 - name: elastic-ca
-                  mountPath: /usr/share/elastic-agent/certs/ca.crt
+                  mountPath: /usr/share/elastic-agent/certs/
                   readOnly: true
               extraVolumes:
                 - name: elastic-ca
