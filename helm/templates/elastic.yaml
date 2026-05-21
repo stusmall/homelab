@@ -69,7 +69,7 @@ spec:
             api_key: ExR-Sp4B3UN4UM1C5spU:c9PrO0rSONKbhlHB8fOXwQ
             ssl:
               certificateAuthorities:
-                - value: /usr/share/elastic-agent/certs/tls.crt
+                - path: /usr/share/elastic-agent/certs/tls.crt
         system:
           enabled: true
         kubernetes:
