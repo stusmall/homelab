@@ -89,7 +89,7 @@ spec:
             clusterWide:
               extraVolumeMounts:
                 - name: elastic-ca
-                  mountPath: /usr/share/elastic-agent/certs
+                  mountPath: /usr/share/elastic-agent/certs/ca.crt
                   readOnly: true
               extraVolumes:
                 - name: elastic-ca
