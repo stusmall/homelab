@@ -66,7 +66,7 @@ spec:
           default:
             type: ESPlainAuthAPI
             url: https://elastic-cluster-es-http:9200
-            api_key: yuPo7p0BnX8ErKTLP4Et:Jqh7lKx0BPHUvlYFI-eMHg
+            api_key: ExR-Sp4B3UN4UM1C5spU:c9PrO0rSONKbhlHB8fOXwQ
             ssl:
               certificateAuthorities:
                 - value: /usr/share/elastic-agent/certs/tls.crt
