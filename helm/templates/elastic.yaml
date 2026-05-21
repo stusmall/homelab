@@ -63,21 +63,15 @@ spec:
       values: |
         outputs:
           default:
-            type: ESSecretAuthAPI
-            url: https://elastic-cluster-es-http:9200
-            secretName: es-api-secret
-            ssl:
-              certificateAuthorities:
-                - valueFromSecret:
-                    name: elastic-cluster-es-http-ca-internal
-                    key: tls.crt
+            type: ESECKRef
+            name: elastic-cluster
+            namespace: elastic
         system:
           enabled: true
         kubernetes:
           enabled: true
         agent:
-          fleet:
-            enabled: false
+          engine: eck
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
