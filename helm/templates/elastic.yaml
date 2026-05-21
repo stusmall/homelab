@@ -80,12 +80,12 @@ spec:
             perNode:
               extraVolumeMounts:
                 - name: elastic-ca
-                  mountPath: /usr/share/elastic-agent/certs
+                  mountPath: /usr/share/elastic-agent/certs/ca.crt
                   readOnly: true
               extraVolumes:
                 - name: elastic-ca
                   secret:
-                    secretName:  elastic-cluster-es-remote-ca
+                    secretName: elastic-cluster-es-remote-ca
             clusterWide:
               extraVolumeMounts:
                 - name: elastic-ca
@@ -94,7 +94,7 @@ spec:
               extraVolumes:
                 - name: elastic-ca
                   secret:
-                    secretName:  elastic-cluster-es-remote-ca
+                    secretName: elastic-cluster-es-remote-ca
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
