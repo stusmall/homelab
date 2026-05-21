@@ -63,7 +63,7 @@ spec:
       values: |
         outputs:
           default:
-            type: ESPlainAuthAPI
+            type: ESSecretAuthAPI
             url: https://elastic-cluster-es-http:9200
             secretName: es-api-secret
             ssl:
