@@ -60,13 +60,12 @@ spec:
     chart: elastic-agent
     targetRevision: 9.3.3
     helm:
-      # I should update this to internal http?
       values: |
         outputs:
           default:
             type: ESPlainAuthAPI
             url: https://elastic-cluster-es-http:9200
-            api_key: ExR-Sp4B3UN4UM1C5spU:c9PrO0rSONKbhlHB8fOXwQ
+            secretName: es-api-secret
             ssl:
               certificateAuthorities:
                 - valueFromSecret:
@@ -79,25 +78,6 @@ spec:
         agent:
           fleet:
             enabled: false
-          presets:
-            perNode:
-              extraVolumeMounts:
-                - name: elastic-ca
-                  mountPath: /usr/share/elastic-agent/certs/
-                  readOnly: true
-              extraVolumes:
-                - name: elastic-ca
-                  secret:
-                    secretName: elastic-cluster-es-http-ca-internal
-            clusterWide:
-              extraVolumeMounts:
-                - name: elastic-ca
-                  mountPath: /usr/share/elastic-agent/certs/
-                  readOnly: true
-              extraVolumes:
-                - name: elastic-ca
-                  secret:
-                    secretName: elastic-cluster-es-http-ca-internal
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic

@@ -25,3 +25,5 @@ argocd app create apps --dest-server https://kubernetes.default.svc --repo https
 argocd app sync apps
 kubectl get secrets --namespace elastic elastic-cluster-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode; echo
 kubectl port-forward --namespace elastic  service/kibana-kb-http 5601
+# create API key
+https://localhost:5601/app/observabilityOnboarding/kubernetes/?category=kubernetes
