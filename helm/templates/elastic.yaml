@@ -69,33 +69,33 @@ spec:
             api_key: yuPo7p0BnX8ErKTLP4Et:Jqh7lKx0BPHUvlYFI-eMHg
             ssl:
               certificateAuthorities:
-                - path: /usr/share/elastic-agent/certs/ca.crt
+                - value: /usr/share/elastic-agent/certs/ca.crt
         system:
           enabled: true
         kubernetes:
           enabled: true
-        fleet:
-          enabled: false
         agent:
+          fleet:
+            enabled: false
           presets:
             perNode:
               extraVolumeMounts:
-              - name: elastic-ca
-                mountPath: /usr/share/elastic-agent/certs/
-                readOnly: true
+                - name: elastic-ca
+                  mountPath: /usr/share/elastic-agent/certs/
+                  readOnly: true
               extraVolumes:
-              - name: elastic-ca
-                secret:
-                  secretName: elastic-cluster-es-remote-ca
+                - name: elastic-ca
+                  secret:
+                    secretName: elastic-cluster-es-remote-ca
             clusterWide:
               extraVolumeMounts:
-              - name: elastic-ca
-                mountPath: /usr/share/elastic-agent/certs/
-                readOnly: true
+                - name: elastic-ca
+                  mountPath: /usr/share/elastic-agent/certs/
+                  readOnly: true
               extraVolumes:
-              - name: elastic-ca
-                secret:
-                  secretName: elastic-cluster-es-remote-ca
+                - name: elastic-ca
+                  secret:
+                    secretName: elastic-cluster-es-remote-ca
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
