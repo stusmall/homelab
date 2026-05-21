@@ -69,7 +69,9 @@ spec:
             api_key: ExR-Sp4B3UN4UM1C5spU:c9PrO0rSONKbhlHB8fOXwQ
             ssl:
               certificateAuthorities:
-                - path: /usr/share/elastic-agent/certs/tls.crt
+                - valueFromSecret:
+                    name: elastic-cluster-es-http-ca-internal
+                    key: tls.crt
         system:
           enabled: true
         kubernetes:
