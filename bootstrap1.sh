@@ -11,11 +11,10 @@ wait_for() {
   echo "$desc ready."
 }
 
-minikube start --cpus='4' -m 20gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --host-only-cidr="192.168.99.100/24"
+minikube start --extra-config=kubeadm.skip-phases=addon/kube-proxy --host-only-cidr="192.168.99.100/24"
 minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
-minikube stop
+minikube stop --extra-config=kubeadm.skip-phases=addon/kube-proxy --host-only-cidr="192.168.99.100/24"
 minikube start
-kubectl apply -f helm/templates/cilium.yaml
 helm install cilium cilium/cilium \
   --namespace kube-system \
   --version 1.19.4 \
