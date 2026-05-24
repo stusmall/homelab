@@ -1,0 +1,64 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.cilium.io/
+    chart: cilium
+    targetRevision: 1.19.4
+    helm:
+      valuesObject:
+        k8sServiceHost: 192.168.99.100
+        k8sServicePort: 8443
+        operator:
+          replicas: 1
+        kubeProxyReplacement: true
+        hubble:
+          relay:
+            enabled: true
+          ui:
+            enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: argocd-server
+spec:
+  endpointSelector:
+    matchLabels:
+      name: argocd-server
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            name: argocd-redis
+      toPorts:
+        - ports:
+            - port: "6379"
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: argocd-reds
+spec:
+  endpointSelector:
+    matchLabels:
+      name: argocd-server
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            name: argocd-server
+      toPorts:
+        - ports:
+            - port: "6379"
