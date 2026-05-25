@@ -11,7 +11,7 @@ spec:
     targetRevision: 1.19.4
     helm:
       valuesObject:
-        k8sServiceHost: 192.168.99.104
+        k8sServiceHost: 127.0.0.1
         k8sServicePort: 8443
         operator:
           replicas: 1
