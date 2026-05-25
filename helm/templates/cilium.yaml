@@ -35,6 +35,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: argocd-server
+  namespace: argocd
 spec:
   endpointSelector:
     matchLabels:
@@ -51,6 +52,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: argocd-redis
+  namespace: argocd
 spec:
   endpointSelector:
     matchLabels:
