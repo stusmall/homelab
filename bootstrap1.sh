@@ -11,10 +11,10 @@ wait_for() {
   echo "$desc ready."
 }
 
-minikube start --extra-config=kubeadm.skip-phases=addon/kube-proxy
+LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0  minikube start --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
 minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
-minikube stop --extra-config=kubeadm.skip-phases=addon/kube-proxy
-minikube start
+LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0  minikube stop --extra-config=kubeadm.skip-phases=addon/kube-proxy
+LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0  minikube start --extra-config=kubeadm.skip-phases=addon/kube-proxy
 helm install cilium cilium/cilium \
   --namespace kube-system \
   --version 1.19.4 \
