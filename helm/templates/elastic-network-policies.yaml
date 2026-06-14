@@ -31,3 +31,22 @@ spec:
         - ports:
             - port: "8443"
               protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: agent-clusterwide-elastic-agent
+  namespace: elastic
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: agent-clusterwide-elastic-agent
+  egress:
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "8443"
+              protocol: TCP
+---
+# agent-clusterwide-elastic-agent
