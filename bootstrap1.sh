@@ -26,9 +26,11 @@ helm install cilium cilium/cilium \
   --set hubble.relay.enabled=true \
   --set hubble.ui.enabled=true
 wait_for "cilium" kubectl rollout status deployment --namespace kube-system cilium-operator
+wait_for "cilium network policy crd" kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumnetworkpolicies.cilium.io
+wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.io
+kubectl apply -f helm/templates/cilium-cluster-policy.yaml
 helm install argocd argo/argo-cd --namespace argocd  --create-namespace
 kubectl apply -f helm/templates/argocd.yaml
+kubectl apply -f helm/templates/argocd-network-policies.yaml
 wait_for "argocd" kubectl rollout status deployment --namespace argocd argocd-server
 kubectl port-forward -n argocd services/argocd-server 8443:443
-#kubectl port-forward --namespace elastic  service/kibana-kb-http 5601 &
-#kubectl get secrets --namespace elastic elastic-cluster-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode
