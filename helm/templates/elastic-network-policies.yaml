@@ -1,6 +1,62 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
+  name: agents
+  namespace: elastic
+spec:
+  endpointSelector:
+    matchLabels:
+      common.k8s.elastic.co/type: agent
+  egress:
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "8443"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kube-state-metrics
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: elastic-cluster
+  namespace: elastic
+spec:
+  endpointSelector:
+    matchLabels:
+      elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            common.k8s.elastic.co/type: agent
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            common.k8s.elastic.co/type: kibana
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
   name: elastic-operator
   namespace: elastic
 spec:
@@ -35,18 +91,21 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: agent-clusterwide-elastic-agent
+  name: kibana
   namespace: elastic
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: agent-clusterwide-elastic-agent
+      common.k8s.elastic.co/type: kibana
   egress:
-    - toEntities:
-        - kube-apiserver
+    - toFQDNs:
+        - matchName: "artifacts.security.elastic.co"
+        - matchName: "epr.elastic.co"
+        - matchName: "telemetry.elastic.co"
+    - toEndpoints:
+        - matchLabels:
+            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
       toPorts:
         - ports:
-            - port: "8443"
+            - port: "9200"
               protocol: TCP
----
-# agent-clusterwide-elastic-agent
