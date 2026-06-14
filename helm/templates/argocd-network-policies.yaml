@@ -114,6 +114,7 @@ spec:
         - matchName: "helm.cilium.io"
         - matchName: "release-assets.githubusercontent.com"
         - matchName: "quay.io"
+        - matchPattern: "*.quay.io"
         - matchName: "helm.elastic.co"
     - toEndpoints:
         - matchLabels:
