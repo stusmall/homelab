@@ -110,9 +110,11 @@ spec:
   egress:
     - toFQDNs:
         - matchName: "github.com"
-        - matchName: "argoproj.github.io"
+        - matchPattern: "*.github.io"
         - matchName: "helm.cilium.io"
         - matchName: "release-assets.githubusercontent.com"
+        - matchName: "quay.io"
+        - matchName: "helm.elastic.co"
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: argocd-redis
