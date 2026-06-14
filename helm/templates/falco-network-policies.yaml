@@ -1,0 +1,22 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: falco
+  namespace: falco
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: falco
+  egress:
+    - toFQDNs:
+        - matchName: "falcosecurity.github.io"
+        - matchName: "github.com"
+        - matchName: "ghcr.io"
+        - matchName: "tuf-repo-cdn.sigstore.dev"
+        - matchPattern: "*.githubusercontent.com"
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "8443"
+              protocol: TCP
