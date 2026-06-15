@@ -34,6 +34,17 @@ spec:
   nodeSets:
     - name: default
       count: 1
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 2Gi
+                  cpu: 1
+                limits:
+                  memory: 2Gi
+
 ---
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
