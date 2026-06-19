@@ -82,11 +82,6 @@ spec:
           enabled: true
         kubernetes:
           enabled: true
-          processors:
-            - drop_event:
-                when:
-                  equals:
-                    kubernetes.pod.labels.k8s-app: "kube-dns"
         agent:
           engine: eck
   destination:
