@@ -48,6 +48,13 @@ spec:
               protocol: TCP
     - fromEndpoints:
         - matchLabels:
+            app.kubernetes.io/name: elastic-operator
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
             common.k8s.elastic.co/type: kibana
       toPorts:
         - ports:
@@ -64,6 +71,13 @@ spec:
     matchLabels:
       app.kubernetes.io/name: elastic-operator
   egress:
+    - toEndpoints:
+        - matchLabels:
+            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+      toPorts:
+        - ports:
+            - port: "9200"
+              protocol: TCP
     - toEntities:
         - kube-apiserver
       toPorts:

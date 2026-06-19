@@ -29,8 +29,9 @@ wait_for "cilium" kubectl rollout status deployment --namespace kube-system cili
 wait_for "cilium network policy crd" kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumnetworkpolicies.cilium.io
 wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.io
 kubectl apply -f helm/templates/cilium-clusterwide-policies.yaml
+kubectl create namespace argocd
+kubectl apply -f helm/templates/argocd-network-policies.yaml
 helm install argocd argo/argo-cd --namespace argocd  --create-namespace
 kubectl apply -f helm/templates/argocd.yaml
-kubectl apply -f helm/templates/argocd-network-policies.yaml
 wait_for "argocd" kubectl rollout status deployment --namespace argocd argocd-server
 kubectl port-forward -n argocd services/argocd-server 8443:443
