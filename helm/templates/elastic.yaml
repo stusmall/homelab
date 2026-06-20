@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://helm.elastic.co
     chart: eck-operator
-    targetRevision: 3.4.0
+    targetRevision: 3.3.2
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
@@ -34,18 +34,6 @@ spec:
   nodeSets:
     - name: default
       count: 1
-      podTemplate:
-        spec:
-          containers:
-            - name: elasticsearch
-              resources:
-                requests:
-                  memory: 4Gi
-                  cpu: 2
-                limits:
-                  memory: 4Gi
-                  cpu: 2
-
 ---
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
