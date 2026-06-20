@@ -71,7 +71,7 @@ spec:
     repoURL: https://helm.elastic.co
     chart: elastic-agent
     targetRevision: 9.3.3
-    helm:
+    helm: |
       values:
         outputs:
           default:
