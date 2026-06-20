@@ -72,7 +72,7 @@ spec:
     chart: elastic-agent
     targetRevision: 9.3.3
     helm:
-      values: |
+      values:
         outputs:
           default:
             type: ESECKRef
@@ -81,7 +81,9 @@ spec:
         system:
           enabled: true
         kubernetes:
-          enabled: true
+          containers:
+            logs:
+              enabled: false
         agent:
           engine: eck
   destination:
