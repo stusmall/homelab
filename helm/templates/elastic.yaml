@@ -81,9 +81,7 @@ spec:
         system:
           enabled: true
         kubernetes:
-          containers:
-            logs:
-              enabled: false
+          enabled: true
         agent:
           engine: eck
   destination:
