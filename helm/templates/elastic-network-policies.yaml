@@ -1,10 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: agents
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
@@ -37,7 +44,7 @@ metadata:
   name: elastic-cluster
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
@@ -71,7 +78,7 @@ metadata:
   name: elastic-operator
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
@@ -97,7 +104,7 @@ metadata:
   name: kube-state-metrics
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
@@ -116,7 +123,7 @@ metadata:
   name: kibana
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
@@ -140,7 +147,7 @@ metadata:
   name: allow-imds
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector: {}
   egress:
@@ -159,7 +166,7 @@ metadata:
   name: allow-intra-namespace
   namespace: elastic
   annotations:
-    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector: {}
   ingress:
