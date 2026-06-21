@@ -89,9 +89,9 @@ spec:
                   when:
                     or:
                       - equals:
-                          log.level: "debug"
+                          kubernetes.labels.k8s-app: "kube-dns"
                       - equals:
-                          log.level: "info"
+                         kubernetes.pod.name: "storage-provisioner"
 
         agent:
           engine: eck
