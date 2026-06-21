@@ -4,6 +4,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-server
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -35,6 +37,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-application-controller
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -66,6 +70,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-redis
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -88,6 +94,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-repo-server
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -129,6 +137,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-applicationset-controller
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -146,6 +156,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-notifications-controller
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -163,6 +175,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-dex-server
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -180,6 +194,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd-redis-secret-init
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:

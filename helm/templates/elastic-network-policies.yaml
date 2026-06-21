@@ -3,6 +3,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: agents
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -34,6 +36,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: elastic-cluster
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -66,6 +70,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: elastic-operator
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -90,6 +96,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: kube-state-metrics
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -107,6 +115,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: kibana
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -129,6 +139,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: allow-imds
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector: {}
   egress:
@@ -146,6 +158,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: allow-intra-namespace
   namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector: {}
   ingress:

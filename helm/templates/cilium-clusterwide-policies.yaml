@@ -1,9 +1,11 @@
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
 metadata:
-  name: "default-deny"
+  name: "allow-dns"
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
-  description: "Block all the traffic (except DNS) by default"
+  description: "Allow DNS cluster wide"
   egress:
     - toEndpoints:
         - matchLabels:

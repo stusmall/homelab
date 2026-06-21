@@ -3,6 +3,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: cainjector
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -20,6 +22,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: cert-manager
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -37,6 +41,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: startupapicheck
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
@@ -54,6 +60,8 @@ kind: CiliumNetworkPolicy
 metadata:
   name: webhook
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   endpointSelector:
     matchLabels:
