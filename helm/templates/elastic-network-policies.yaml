@@ -159,21 +159,3 @@ spec:
               protocol: TCP
             - port: "443"
               protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: allow-intra-namespace
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector: {}
-  ingress:
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: elastic
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: elastic
