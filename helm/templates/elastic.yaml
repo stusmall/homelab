@@ -81,6 +81,18 @@ spec:
           enabled: true
         kubernetes:
           enabled: true
+          hints:
+            enabled: false
+          containers:
+            processors:
+              - drop_event:
+                  when:
+                    or:
+                      - equals:
+                          log.level: "debug"
+                      - equals:
+                          log.level: "info"
+
         agent:
           engine: eck
   destination:
