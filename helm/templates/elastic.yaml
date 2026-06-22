@@ -81,8 +81,21 @@ spec:
           enabled: true
         kubernetes:
           enabled: true
+          apiserer:
+            enabled: false
           containers:
             logs:
+              enabled: false
+            metrics:
+              enabled: false
+          pods:
+            metrics:
+              enabled: false
+          volumes:
+            metrics:
+              enabled: false
+          nodes:
+            metrics:
               enabled: false
         agent:
           engine: eck
