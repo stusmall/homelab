@@ -81,18 +81,9 @@ spec:
           enabled: true
         kubernetes:
           enabled: true
-          hints:
-            enabled: false
           containers:
-            processors:
-              - drop_event:
-                  when:
-                    or:
-                      - equals:
-                          kubernetes.labels.k8s-app: "kube-dns"
-                      - equals:
-                         kubernetes.pod.name: "storage-provisioner"
-
+            logs:
+              enabled: false
         agent:
           engine: eck
   destination:
