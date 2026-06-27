@@ -101,6 +101,10 @@ spec:
             namespace: elastic
         system:
           enabled: true
+          syslog:
+            enabled: false
+          metrics:
+            enabled: false
         kubernetes:
           enabled: true
           metrics:
