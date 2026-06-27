@@ -66,10 +66,25 @@ spec:
               protocol: TCP
     - fromEndpoints:
         - matchLabels:
+            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+      toPorts:
+        - ports:
+            - port: "9300"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
             common.k8s.elastic.co/type: kibana
       toPorts:
         - ports:
             - port: "9200"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+      toPorts:
+        - ports:
+            - port: "9300"
               protocol: TCP
 ---
 apiVersion: cilium.io/v2
