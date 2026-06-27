@@ -6,16 +6,20 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://argoproj.github.io/argo-helm
+    repoURL: oci://ghcr.io/argoproj/argo-helm/argo-cd
     chart: argo-cd
-    targetRevision: 9.6.0
+    targetRevision: 10.0.0
     helm:
       valuesObject:
-        configs:
-          params:
-            server.insecure: false
-        server:
-          replicas: 1
+        global:
+          image:
+            repository: reg.mini.dev/argocd
+        dex:
+          image:
+            repository: reg.mini.dev/redis
+        redis:
+          image:
+            repository: reg.mini.dev/redis
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
