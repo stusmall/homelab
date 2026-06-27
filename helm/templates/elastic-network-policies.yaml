@@ -69,6 +69,8 @@ spec:
             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
       toPorts:
         - ports:
+            - port: "9200"
+              protocol: TCP
             - port: "9300"
               protocol: TCP
     - fromEndpoints:
@@ -84,6 +86,8 @@ spec:
             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
       toPorts:
         - ports:
+            - port: "9200"
+              protocol: TCP
             - port: "9300"
               protocol: TCP
 ---
