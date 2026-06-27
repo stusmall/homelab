@@ -62,11 +62,11 @@ spec:
             - name: elasticsearch
               resources:
                 requests:
-                  memory: 4Gi
-                  cpu: 2
+                  memory: 3Gi
+                  cpu: 1
                 limits:
-                  memory: 4Gi
-                  cpu: 2
+                  memory: 3Gi
+                  cpu: 1
 ---
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
