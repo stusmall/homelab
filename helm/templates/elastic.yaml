@@ -23,7 +23,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: elastic
+  name: elastic-operator
   namespace: argocd
 spec:
   project: default
@@ -43,31 +43,31 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-# ---
-# apiVersion: elasticsearch.k8s.elastic.co/v1
-# kind: Elasticsearch
-# metadata:
-#   name: elastic-cluster
-#   namespace: elastic
-#   annotations:
-#     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
-# spec:
-#   version: 9.3.0
-#   nodeSets:
-#     - name: default
-#       count: 1
-#       podTemplate:
-#         spec:
-#           containers:
-#             - name: elasticsearch
-#               resources:
-#                 requests:
-#                   memory: 4Gi
-#                   cpu: 2
-#                 limits:
-#                   memory: 4Gi
-#                   cpu: 2
-# ---
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elastic-cluster
+  namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
+spec:
+  version: 9.3.0
+  nodeSets:
+    - name: default
+      count: 1
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 4Gi
+                  cpu: 2
+                limits:
+                  memory: 4Gi
+                  cpu: 2
+---
 # apiVersion: kibana.k8s.elastic.co/v1
 # kind: Kibana
 # metadata:
