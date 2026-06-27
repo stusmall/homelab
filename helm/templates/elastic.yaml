@@ -55,11 +55,18 @@ spec:
   version: 9.3.0
   nodeSets:
     - name: default
-      count: 1
-      config:
-        index.number_of_replicas: 0
+      count: 3
       podTemplate:
         spec:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+                    topologyKey: kubernetes.io/hostname
           containers:
             - name: elasticsearch
               resources:
