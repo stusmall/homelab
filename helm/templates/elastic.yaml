@@ -55,17 +55,19 @@ spec:
   version: 9.3.0
   nodeSets:
     - name: default
-      count: 2
+      count: 1
+      config:
+        index.number_of_replicas: 0
       podTemplate:
         spec:
           containers:
             - name: elasticsearch
               resources:
                 requests:
-                  memory: 3Gi
+                  memory: 2Gi
                   cpu: 1
                 limits:
-                  memory: 3Gi
+                  memory: 2Gi
                   cpu: 1
 ---
 apiVersion: kibana.k8s.elastic.co/v1
