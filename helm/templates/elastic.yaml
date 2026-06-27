@@ -31,6 +31,9 @@ spec:
     repoURL: https://helm.elastic.co
     chart: eck-operator
     targetRevision: 3.4.0
+    helm:
+      values: |
+        installCRDs: true
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
