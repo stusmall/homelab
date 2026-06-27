@@ -109,7 +109,7 @@ spec:
           enabled: true
           metrics:
             enabled: false
-          apiserer:
+          apiserver:
             enabled: false
           state:
             enabled: false
