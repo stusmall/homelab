@@ -14,12 +14,19 @@ spec:
         global:
           image:
             repository: reg.mini.dev/argocd
+            tag: "v3.4.4"
         dex:
           image:
-            repository: reg.mini.dev/redis
+            repository: reg.mini.dev/dex
+            tag: "v2.45.1"
         redis:
           image:
             repository: reg.mini.dev/redis
+            tag: "8.2.3"
+          exporter:
+            image:
+              repository: "reg.mini.dev/prometheus-redis-exporter-advanced"
+              tag: "v1.86.0"
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
