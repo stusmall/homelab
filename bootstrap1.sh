@@ -11,10 +11,21 @@ wait_for() {
   echo "$desc ready."
 }
 
+#Load in secrets
+source .env
+
+
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube start --cpus='4' -m 24gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube stop
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube start --cpus='4' -m 24gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
+
+kubectl create secret docker-registry helm-pull-secret \
+  --docker-server=dhi.io \
+  --docker-username=$DOCKER_USERNAME \
+  --docker-password=$DOCKER_PAT \
+  --docker-email=$DOCKER_EMAIL
+
 helm install cilium oci://quay.io/cilium/charts/cilium \
   --namespace kube-system \
   --version 1.19.4 \
@@ -31,7 +42,8 @@ wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedef
 kubectl apply -f helm/templates/cilium-clusterwide-policies.yaml
 kubectl create namespace argocd
 kubectl apply -f helm/templates/argocd-network-policies.yaml
-helm install argocd oci://ghcr.io/argoproj/argo-helm/argo-cd --namespace argocd  --create-namespace
+helm install argocd oci://dhi.io/argocd-chart \
+    --namespace argocd  --create-namespace
 kubectl apply -f helm/templates/argocd.yaml
 wait_for "argocd" kubectl rollout status deployment --namespace argocd argocd-server
 kubectl port-forward -n argocd services/argocd-server 8443:443

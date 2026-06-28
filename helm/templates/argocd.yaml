@@ -6,27 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://ghcr.io/argoproj/argo-helm/argo-cd
+    repoURL: oci://dhi.io/argocd-chart
     chart: argo-cd
-    targetRevision: 10.0.0
-    helm:
-      valuesObject:
-        global:
-          image:
-            repository: reg.mini.dev/argocd
-            tag: "v3.4.4"
-        dex:
-          image:
-            repository: reg.mini.dev/dex
-            tag: "v2.45.1"
-        redis:
-          image:
-            repository: reg.mini.dev/redis
-            tag: "8.2.3"
-          exporter:
-            image:
-              repository: "reg.mini.dev/prometheus-redis-exporter-advanced"
-              tag: "v1.86.0"
+    targetRevision: 9.7.1
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
