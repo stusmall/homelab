@@ -11,24 +11,30 @@ wait_for() {
   echo "$desc ready."
 }
 
-#Load in secrets
-source .env
-
+add_secret_to_namespace() {
+    kubectl create namespace $@
+    kubectl create secret --namespace $@ docker-registry helm-pull-secret \
+      --docker-server=dhi.io \
+      --docker-username=$DOCKER_USERNAME \
+      --docker-password=$DOCKER_PAT \
+      --docker-email=$DOCKER_EMAIL
+}
 
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube start --cpus='4' -m 24gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube stop
 LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube start --cpus='4' -m 24gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
 
-kubectl create secret docker-registry helm-pull-secret \
-  --docker-server=dhi.io \
-  --docker-username=$DOCKER_USERNAME \
-  --docker-password=$DOCKER_PAT \
-  --docker-email=$DOCKER_EMAIL
+#Load in secrets
+source .env
+
+add_secret_to_namespace argocd
+add_secret_to_namespace elastic
+add_secret_to_namespace cert-manager
+add_secret_to_namespace kube-system
 
 helm install cilium oci://quay.io/cilium/charts/cilium \
   --namespace kube-system \
-  --version 1.19.4 \
   --set k8sServiceHost=127.0.0.1 \
   --set k8sServicePort=8443 \
   --set operator.replicas=1 \
@@ -43,7 +49,8 @@ kubectl apply -f helm/templates/cilium-clusterwide-policies.yaml
 kubectl create namespace argocd
 kubectl apply -f helm/templates/argocd-network-policies.yaml
 helm install argocd oci://dhi.io/argocd-chart \
-    --namespace argocd  --create-namespace
+    --namespace argocd  --create-namespace \
+    --set global.imagePullSecrets[0].name=helm-pull-secret
 kubectl apply -f helm/templates/argocd.yaml
 wait_for "argocd" kubectl rollout status deployment --namespace argocd argocd-server
 kubectl port-forward -n argocd services/argocd-server 8443:443
