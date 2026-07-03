@@ -16,10 +16,10 @@ spec:
         operator:
           replicas: 1
         kubeProxyReplacement: true
+        ingressController:
+          enabled: true
         hubble:
           relay:
-            enabled: true
-          ui:
             enabled: true
   destination:
     server: https://kubernetes.default.svc

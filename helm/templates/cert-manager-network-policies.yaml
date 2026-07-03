@@ -1,82 +1,82 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: cert-manager
-  annotations:
-    argocd.argoproj.io/sync-wave: "-10"
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: cainjector
-  namespace: cert-manager
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: cainjector
-  egress:
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: cert-manager
-  namespace: cert-manager
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: cert-manager
-  egress:
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: startupapicheck
-  namespace: cert-manager
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: startupapicheck
-  egress:
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: webhook
-  namespace: cert-manager
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: webhook
-  egress:
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: cert-manager
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-10"
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: cainjector
+#   namespace: cert-manager
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: cainjector
+#   egress:
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: cert-manager
+#   namespace: cert-manager
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: cert-manager
+#   egress:
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: startupapicheck
+#   namespace: cert-manager
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: startupapicheck
+#   egress:
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: webhook
+#   namespace: cert-manager
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: webhook
+#   egress:
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
