@@ -25,3 +25,36 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: self-signed
+  namespace: cert-manager
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ca
+  namespace: cert-manager
+spec:
+  isCA: true
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  secretName: ca
+  commonName: ca
+  issuerRef:
+    name: self-signed
+    kind: Issuer
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: ca-issuer
+  namespace: cert-manager
+spec:
+  ca:
+    secretName: ca
