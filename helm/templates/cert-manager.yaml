@@ -44,7 +44,7 @@ metadata:
   namespace: cert-manager
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in sync wave -5
-    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-wave: "-3"
 spec:
   isCA: true
   privateKey:
@@ -63,7 +63,7 @@ metadata:
   namespace: cert-manager
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in sync wave -5
-    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   ca:
     secretName: ca
