@@ -44,7 +44,6 @@ helm install cilium oci://quay.io/cilium/charts/cilium \
 wait_for "cilium" kubectl rollout status deployment --namespace kube-system cilium-operator
 wait_for "cilium network policy crd" kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumnetworkpolicies.cilium.io
 wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.io
-LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube addons enable ingress
 kubectl apply -f helm/templates/cilium-clusterwide-policies.yaml
 
 kubectl apply -f helm/templates/argocd-network-policies.yaml
