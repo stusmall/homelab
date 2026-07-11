@@ -34,16 +34,9 @@ metadata:
   namespace: cert-manager
   annotations:
     argocd.argoproj.io/sync-wave: "-4"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   selfSigned: {}
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in sync wave -5
----
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -52,6 +45,7 @@ metadata:
   namespace: cert-manager
   annotations:
     argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   isCA: true
   privateKey:
@@ -62,13 +56,6 @@ spec:
   issuerRef:
     name: self-signed
     kind: ClusterIssuer
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in sync wave -5
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -77,14 +64,7 @@ metadata:
   namespace: cert-manager
   annotations:
     argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   ca:
     secretName: ca
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true # CRD is installed by cert-manager in sync wave -5
----
