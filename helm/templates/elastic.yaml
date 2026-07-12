@@ -110,66 +110,10 @@ spec:
             namespace: elastic
         system:
           enabled: true
-          syslog:
-            enabled: false
-          metrics:
-            enabled: false
         kubernetes:
           enabled: true
-          metrics:
-            enabled: false
-          apiserver:
-            enabled: false
-          state:
-            enabled: false
           containers:
             logs:
-              enabled: false
-            metrics:
-              enabled: false
-            state:
-              enabled: false
-          pods:
-            metrics:
-              enabled: false
-            state:
-              enabled: false
-          deployments:
-            state:
-              enabled: false
-          daemonsets:
-            state:
-              enabled: false
-          replicasets:
-            state:
-              enabled: false
-          volumes:
-            metrics:
-              enabled: false
-            state:
-              enabled: false
-          nodes:
-            metrics:
-              enabled: false
-            state:
-              enabled: false
-          jobs:
-            state:
-              enabled: false
-          cronjobs:
-            state:
-              enabled: false
-          persistentvolumes:
-            state:
-              enabled: false
-          persistentvolumeclaims:
-            state:
-              enabled: false
-          resourcequotas:
-            state:
-              enabled: false
-          system:
-            metrics:
               enabled: false
         agent:
           engine: eck
