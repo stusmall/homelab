@@ -123,6 +123,7 @@ spec:
         - matchName: "quay.io"
         - matchPattern: "*.quay.io"
         - matchName: "dhi.io"
+        - matchName: "registry.docker.io"
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: argocd-redis
