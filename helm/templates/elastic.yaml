@@ -28,8 +28,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://helm.elastic.co
-    chart: eck-operator
+    repoURL: oci://dhi.io/eck-operator-chart
     targetRevision: 3.4.1
     helm:
       values: |
