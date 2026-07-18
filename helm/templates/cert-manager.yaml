@@ -9,6 +9,7 @@ spec:
   project: default
   source:
     repoURL: oci://dhi.io/cert-manager-chart
+    chart: cert-manager
     targetRevision: 1.20.3
     helm:
       values: |
