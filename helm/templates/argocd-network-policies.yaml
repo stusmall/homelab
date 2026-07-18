@@ -125,9 +125,8 @@ spec:
         - matchName: "dhi.io"
         - matchPattern: "*.dhi.io"
         - matchName: "docker.io"
-        - matchPattern: "docker.io"
         - matchName: "helm.elastic.co"
-        - matchPattern: "*.cloudfront.net"
+        - matchName: "production.cloudfront.docker.com"
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: argocd-redis
