@@ -32,6 +32,7 @@ add_secret_to_namespace argocd
 add_secret_to_namespace elastic
 add_secret_to_namespace cert-manager
 add_secret_to_namespace kube-system
+add_secret_to_namespace trivy
 
 helm install cilium oci://quay.io/cilium/charts/cilium \
   --namespace kube-system \
