@@ -15,11 +15,9 @@ spec:
           pullSecrets:
             - name: helm-pull-secret
         trivy:
-          imagePullSecret:
-            - name: helm-pull-secret
+          imagePullSecret: helm-pull-secret
         nodeCollector:
-          imagePullSecret:
-            - name: helm-pull-secret
+          imagePullSecret: helm-pull-secret
   destination:
     server: https://kubernetes.default.svc
     namespace: trivy
