@@ -42,7 +42,7 @@ helm install cilium oci://quay.io/cilium/charts/cilium \
   --set kubeProxyReplacement=true \
   --set ingressController.enabled=true \
   --set hubble.relay.enabled=true \
-  --set hubble.ui.enable=true
+  --set hubble.ui.enabled=true
 wait_for "cilium" kubectl rollout status deployment --namespace kube-system cilium-operator
 wait_for "cilium network policy crd" kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumnetworkpolicies.cilium.io
 wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.io
