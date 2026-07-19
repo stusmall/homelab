@@ -28,10 +28,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://dhi.io/eck-operator-chart
+    repoURL: dhi.io
+    chart: eck-operator-chart
     targetRevision: 3.4.1
     helm:
       values: |
+        imagePullSecrets:
+          - name: helm-pull-secret
         installCRDs: false
   destination:
     server: https://kubernetes.default.svc

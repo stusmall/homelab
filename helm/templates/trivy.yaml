@@ -6,8 +6,20 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://dhi.io/trivy-operator-chart
+    repoURL: dhi.io
+    chart: trivy-operator-chart
     targetRevision: 0.33.1
+    helm:
+      values: |
+        image:
+          pullSecrets:
+            - name: helm-pull-secret
+        trivy:
+          pullSecrets:
+            - name: helm-pull-secret
+        nodeCollector:
+          pullSecrets:
+            - name: helm-pull-secret
   destination:
     server: https://kubernetes.default.svc
     namespace: trivy
