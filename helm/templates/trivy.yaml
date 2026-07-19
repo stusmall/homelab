@@ -15,10 +15,10 @@ spec:
           pullSecrets:
             - name: helm-pull-secret
         trivy:
-          pullSecrets:
+          imagePullSecret:
             - name: helm-pull-secret
         nodeCollector:
-          pullSecrets:
+          imagePullSecret:
             - name: helm-pull-secret
   destination:
     server: https://kubernetes.default.svc

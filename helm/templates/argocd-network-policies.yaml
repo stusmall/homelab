@@ -121,10 +121,12 @@ spec:
         - matchPattern: "*.github.io"
         - matchName: "release-assets.githubusercontent.com"
         - matchName: "quay.io"
+        - matchPattern: "*.quay.io"
         - matchName: "dhi.io"
         - matchName: "docker.io"
         - matchName: "helm.elastic.co"
         - matchName: "production.cloudfront.docker.com"
+        - matchName: "mirror.gcr.io"
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: argocd-redis
