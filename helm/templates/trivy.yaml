@@ -15,7 +15,8 @@ spec:
           pullSecrets:
             - name: helm-pull-secret
         trivy:
-          imagePullSecret: helm-pull-secret
+          image:
+            imagePullSecret: helm-pull-secret
         nodeCollector:
           imagePullSecret: helm-pull-secret
   destination:
