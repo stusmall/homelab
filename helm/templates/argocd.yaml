@@ -6,12 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://dhi.io/argocd-chart
-    targetRevision: 9.7.1
-    helm:
-      valuesObject:
-        imagePullSecrets:
-          - name: helm-pull-secret
+    repoURL: oci://helm.mini.dev/argo-cd
+    targetRevision: 10.2.0
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

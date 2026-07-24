@@ -6,23 +6,24 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://quay.io/cilium/charts/cilium
+    repoURL: oci://helm.mini.dev/cilium
     chart: cilium
-    targetRevision: 1.19.4
+    targetRevision: 1.19.6
     helm:
       valuesObject:
-        k8sServiceHost: 127.0.0.1
-        k8sServicePort: 8443
-        operator:
-          replicas: 1
-        kubeProxyReplacement: true
-        ingressController:
-          enabled: true
-        hubble:
-          relay:
+        cilium:
+          k8sServiceHost: 127.0.0.1
+          k8sServicePort: 8443
+          operator:
+            replicas: 1
+          kubeProxyReplacement: true
+          ingressController:
             enabled: true
-          ui:
-            enabled: true
+          hubble:
+            relay:
+              enabled: true
+            ui:
+              enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system

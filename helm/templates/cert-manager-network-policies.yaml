@@ -27,14 +27,14 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: cert-manager-chart
+  name: cert-manager
   namespace: cert-manager
   annotations:
     argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: cert-manager-chart
+      app.kubernetes.io/name: cert-manager
   egress:
     - toEntities:
         - kube-apiserver

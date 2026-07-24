@@ -25,14 +25,14 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: trivy-operator-chart
+  name: trivy-operator
   namespace: trivy
   annotations:
     argocd.argoproj.io/sync-wave: "-9"
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: trivy-operator-chart
+      app.kubernetes.io/name: trivy-operator
   egress:
     - toEntities:
         - kube-apiserver

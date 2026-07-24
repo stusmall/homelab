@@ -28,14 +28,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: dhi.io
-    chart: eck-operator-chart
+    repoURL: oci://helm.mini.dev/eck-operator
+    chart: eck-operator
     targetRevision: 3.4.1
     helm:
       values: |
-        imagePullSecrets:
-          - name: helm-pull-secret
-        installCRDs: false
+        elastic-operator:
+          installCRDs: false
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic
@@ -54,7 +53,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  version: 9.3.0
+  version: 9.4.4
+  image: reg.mini.dev/elasticsearch:v9.4.4
   nodeSets:
     - name: default
       count: 2
