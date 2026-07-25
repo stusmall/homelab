@@ -128,6 +128,8 @@ spec:
         - matchName: "helm.elastic.co"
         - matchName: "production.cloudfront.docker.com"
         - matchName: "mirror.gcr.io"
+        - matchName: "googlecode.l.googleusercontent.com"
+        - matchPattern: "*.pkg.dev"
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: argocd-redis
