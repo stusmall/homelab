@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: oci://helm.mini.dev/cert-manager
     chart: cert-manager
-    targetRevision: 1.21.0
+    targetRevision: v1.21.0
     helm:
       values: |
         cert-manager:
