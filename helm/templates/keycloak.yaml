@@ -2,15 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: keycloak
-  namespace: keycloak
+  namespace: argocd
 spec:
   project: default
   source:
-    repoURL: oci://helm.mini.dev/argo-cd
-    targetRevision: 10.2.0
+    repoURL: oci://helm.mini.dev/keycloak-advanced
+    targetRevision: 25.2.0
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: keycloak
   syncPolicy:
     automated:
       prune: true
