@@ -11,8 +11,12 @@ wait_for() {
   echo "$desc ready."
 }
 
-#Load in secrets
-source .env
+kubectl create ns keycloak-advanced
+
+kubectl create secret generic keycloak-db-credentials \
+    --from-literal=password="$(openssl rand -base64 24)" \
+    --from-literal=postgres-password="$(openssl rand -base64 24)" \
+    --namespace=keycloak-advanced
 
 argocd login --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure localhost:8443
 argocd app create apps --dest-server https://kubernetes.default.svc --repo https://github.com/stusmall/homelab.git --path helm
