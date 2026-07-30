@@ -11,15 +11,16 @@ wait_for() {
   echo "$desc ready."
 }
 
-kubectl create ns keycloak-advanced
+kubectl create ns keycloak
 
 kubectl create secret generic keycloak-db-credentials \
     --from-literal=password="$(openssl rand -base64 24)" \
     --from-literal=postgres-password="$(openssl rand -base64 24)" \
-    --namespace=keycloak-advanced
+    --namespace=keycloak
 
 argocd login --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure localhost:8443
 argocd app create apps --dest-server https://kubernetes.default.svc --repo https://github.com/stusmall/homelab.git --path helm
 argocd app sync apps
 # might need to add a second sync since things seems to be getting caught up on CRDs
 wait_for "kibana" kubectl rollout status deployment --namespace elastic kibana-kb
+# curl -kv --resolve argocd.stuartsmall.com:443:$( kubectl get ingress -n argocd agrocd-ingress  -o jsonpath="{.status.loadBalancer.ingress[0].ip}")  https://argocd.stuartsmall.com

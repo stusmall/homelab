@@ -1,0 +1,43 @@
+# apiVersion: "cilium.io/v2"
+# kind: CiliumClusterwideNetworkPolicy
+# metadata:
+#   name: allow-ingress-to-cluster
+# spec:
+#   endpointSelector:
+#     matchExpressions:
+#       - key: reserved:ingress
+#         operator: Exists
+#   egress:
+#     # - toEntities:
+#     # - cluster
+#     - toEndpoints:
+#         - matchLabels:
+#             app.kubernetes.io/name: argocd-repo-server
+
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: argocd-ingress
+#   namespace: argocd
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: argocd-server
+#   ingress:
+#     - fromEntities:
+#         - ingress
+
+apiVersion: "cilium.io/v2"
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: "ingress-rule"
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: reserved:ingress
+        operator: Exists
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: argocd
+            app.kubernetes.io/name: argocd-server

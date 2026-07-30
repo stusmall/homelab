@@ -19,5 +19,5 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
-        - argocd.stuartsmall.com
+        - argocd.thenoodledragonlair.com
       secretName: argocd-cert
