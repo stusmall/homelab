@@ -11,14 +11,6 @@ wait_for() {
   echo "$desc ready."
 }
 
-
-
-LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube start --cpus='4' -m 24gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
-LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube ssh 'echo "sysctl -w vm.max_map_count=262144" | sudo tee -a /var/lib/boot2docker/bootlocal.sh' # needed because https://github.com/kubernetes/minikube/issues/2367
-LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube stop
-LD_PRELOAD=$(nix-store -q $(which virsh))/lib/libvirt.so.0 minikube start --cpus='4' -m 24gb --extra-config=kubeadm.skip-phases=addon/kube-proxy --driver kvm2
-
-
 helm install cilium oci://helm.mini.dev/cilium \
   --namespace kube-system \
   --set cilium.k8sServiceHost=127.0.0.1 \
@@ -30,12 +22,24 @@ helm install cilium oci://helm.mini.dev/cilium \
   --set cilium.hubble.ui.enabled=true
 wait_for "cilium" kubectl rollout status deployment --namespace kube-system cilium-operator
 wait_for "cilium network policy crd" kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumnetworkpolicies.cilium.io
-wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.io
+wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.iox
 kubectl apply -f helm/templates/cilium-clusterwide-policies.yaml
 kubectl create namespace argocd
 kubectl apply -f helm/templates/argocd-network-policies.yaml
 helm install argocd oci://helm.mini.dev/argo-cd \
-    --namespace argocd  --create-namespace
+    --namespace argocd  --create-namespace \
+    --set argo-cd.configs.params."server\.insecure"=true
 kubectl apply -f helm/templates/argocd.yaml
 wait_for "argocd" kubectl rollout status deployment --namespace argocd argocd-server
-kubectl port-forward -n argocd services/argocd-server 8443:443
+
+
+kubectl create ns keycloak
+kubectl create secret generic keycloak-db-credentials \
+    --from-literal=password="$(openssl rand -base64 24)" \
+    --from-literal=postgres-password="$(openssl rand -base64 24)" \
+    --namespace=keycloak
+
+kubectl apply -f minikube.yaml
+
+wait_for "kibana" kubectl rollout status deployment --namespace elastic kibana-kb
+# curl -kv --resolve argocd.thenoodledragonlair.com:443:$( kubectl get ingress -n argocd agrocd-ingress  -o jsonpath="{.status.loadBalancer.ingress[0].ip}")  https://argocd.thenoodledragonlair.com

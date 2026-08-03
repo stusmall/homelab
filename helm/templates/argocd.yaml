@@ -9,6 +9,12 @@ spec:
     repoURL: oci://helm.mini.dev/argo-cd
     chart: argocd
     targetRevision: 10.2.0
+    helm:
+      values: |
+        argo-cd:
+          configs:
+            params:
+              server.insecure: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
