@@ -22,7 +22,7 @@ helm install cilium oci://helm.mini.dev/cilium \
   --set cilium.hubble.ui.enabled=true
 wait_for "cilium" kubectl rollout status deployment --namespace kube-system cilium-operator
 wait_for "cilium network policy crd" kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumnetworkpolicies.cilium.io
-wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.iox
+wait_for "cilium cluster wide network policy crd"  kubectl get customresourcedefinitions.apiextensions.k8s.io ciliumclusterwidenetworkpolicies.cilium.io
 kubectl apply -f helm/templates/cilium-clusterwide-policies.yaml
 kubectl create namespace argocd
 kubectl apply -f helm/templates/argocd-network-policies.yaml

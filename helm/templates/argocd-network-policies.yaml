@@ -213,3 +213,18 @@ spec:
         - ports:
             - port: "8443"
               protocol: TCP
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: "ingress-rule"
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: reserved:ingress
+        operator: Exists
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: argocd
+            app.kubernetes.io/name: argocd-server
