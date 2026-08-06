@@ -73,7 +73,7 @@ spec:
             - name: elasticsearch
               resources:
                 requests:
-                  memory: 4Gi
+                  memory: 3Gi
                   cpu: 0.5
                 limits:
                   memory: 4Gi
@@ -102,7 +102,7 @@ spec:
   source:
     repoURL: https://helm.elastic.co
     chart: elastic-agent
-    targetRevision: 9.3.3
+    targetRevision: 9.4.4
     helm:
       values: |
         outputs:
