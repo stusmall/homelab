@@ -126,6 +126,7 @@ spec:
         - matchName: "helm.mini.dev"
         - matchName: "docker.io"
         - matchName: "helm.elastic.co"
+        - matchName: "docker.elastic.co"
         - matchName: "production.cloudfront.docker.com"
         - matchName: "mirror.gcr.io"
         - matchName: "googlecode.l.googleusercontent.com"
