@@ -87,7 +87,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  version: 9.2.1
+  version: 9.4.4
   count: 1
   elasticsearchRef:
     name: elastic-cluster
