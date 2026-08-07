@@ -31,7 +31,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  # version: 9.4.4
+  version: 9.4.4
   image: reg.mini.dev/elasticsearch:v9.4.4
   nodeSets:
     - name: default
@@ -65,7 +65,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  # version: 9.4.4
+  version: 9.4.4
   image: reg.mini.dev/kibana:v9.4.4
   count: 1
   elasticsearchRef:
@@ -79,7 +79,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  # version: 9.4.4
+  version: 9.4.4
   image: reg.mini.dev/elastic-agent:v9.4.4
   daemonSet:
     podTemplate:
