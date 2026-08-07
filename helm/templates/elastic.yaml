@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: oci://helm.mini.dev/eck-operator
     chart: eck-operator
-    targetRevision: 3.4.1
+    targetRevision: 3.5.0
     helm:
       values: |
         elastic-operator:
@@ -31,7 +31,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  version: 9.4.4
+  # version: 9.4.4
   image: reg.mini.dev/elasticsearch:v9.4.4
   nodeSets:
     - name: default
@@ -65,7 +65,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  version: 9.4.4
+  # version: 9.4.4
+  image: reg.mini.dev/kibana:v9.4.4
   count: 1
   elasticsearchRef:
     name: elastic-cluster
@@ -73,9 +74,13 @@ spec:
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
-  name: quickstart
+  name: elastic-agent
+  namespace: elastic
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true # CRD is installed by eck-controller in syncwave -5
 spec:
-  version: 9.4.4
+  # version: 9.4.4
+  image: reg.mini.dev/elastic-agent:v9.4.4
   daemonSet:
     podTemplate:
       spec:
