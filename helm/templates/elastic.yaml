@@ -70,6 +70,36 @@ spec:
   elasticsearchRef:
     name: elastic-cluster
 ---
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: quickstart
+spec:
+  version: 9.4.4
+  daemonSet:
+    podTemplate:
+      spec:
+        securityContext:
+          runAsUser: 0
+  elasticsearchRefs:
+    - name: elastic-cluster
+      outputName: default
+    - name: agent-monitoring
+      namespace: elastic-monitoring
+      outputName: monitoring
+  config:
+    agent:
+      monitoring:
+        enabled: true
+        use_output: monitoring
+        logs: false
+        metrics: true
+    inputs:
+      - name: system-1
+        revision: 1
+        type: system/metrics
+        use_output: default
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
