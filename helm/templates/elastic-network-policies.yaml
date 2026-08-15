@@ -1,180 +1,180 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-10"
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: agents
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      common.k8s.elastic.co/type: agent
-  egress:
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
-    - toEndpoints:
-        - matchLabels:
-            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-    - toEndpoints:
-        - matchLabels:
-            app.kubernetes.io/name: kube-state-metrics
-      toPorts:
-        - ports:
-            - port: "8080"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: elastic-cluster
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
-  ingress:
-    - fromEndpoints:
-        - matchLabels:
-            common.k8s.elastic.co/type: agent
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-    - fromEndpoints:
-        - matchLabels:
-            app.kubernetes.io/name: elastic-operator
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-    - fromEndpoints:
-        - matchLabels:
-            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-            - port: "9300"
-              protocol: TCP
-    - fromEndpoints:
-        - matchLabels:
-            common.k8s.elastic.co/type: kibana
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-            - port: "9300"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: elastic-operator
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: elastic-operator
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: kube-state-metrics
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: kube-state-metrics
-  egress:
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "8443"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: kibana
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector:
-    matchLabels:
-      common.k8s.elastic.co/type: kibana
-  egress:
-    - toFQDNs:
-        - matchName: "artifacts.security.elastic.co"
-        - matchName: "epr.elastic.co"
-        - matchName: "telemetry.elastic.co"
-    - toEndpoints:
-        - matchLabels:
-            elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
-      toPorts:
-        - ports:
-            - port: "9200"
-              protocol: TCP
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: allow-imds
-  namespace: elastic
-  annotations:
-    argocd.argoproj.io/sync-wave: "-9"
-spec:
-  endpointSelector: {}
-  egress:
-    - toCIDR:
-        - 169.254.169.254/32
-      toPorts:
-        - ports:
-            - port: "80"
-              protocol: TCP
-            - port: "443"
-              protocol: TCP
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-10"
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: agents
+#   namespace: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       common.k8s.elastic.co/type: agent
+#   egress:
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
+#     - toEndpoints:
+#         - matchLabels:
+#             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#     - toEndpoints:
+#         - matchLabels:
+#             app.kubernetes.io/name: kube-state-metrics
+#       toPorts:
+#         - ports:
+#             - port: "8080"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: elastic-cluster
+#   namespace: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+#   ingress:
+#     - fromEndpoints:
+#         - matchLabels:
+#             common.k8s.elastic.co/type: agent
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#     - fromEndpoints:
+#         - matchLabels:
+#             app.kubernetes.io/name: elastic-operator
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#     - fromEndpoints:
+#         - matchLabels:
+#             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#             - port: "9300"
+#               protocol: TCP
+#     - fromEndpoints:
+#         - matchLabels:
+#             common.k8s.elastic.co/type: kibana
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#   egress:
+#     - toEndpoints:
+#         - matchLabels:
+#             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#             - port: "9300"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: elastic-operator
+#   namespace: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: elastic-operator
+#   egress:
+#     - toEndpoints:
+#         - matchLabels:
+#             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: kube-state-metrics
+#   namespace: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: kube-state-metrics
+#   egress:
+#     - toEntities:
+#         - kube-apiserver
+#       toPorts:
+#         - ports:
+#             - port: "8443"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: kibana
+#   namespace: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector:
+#     matchLabels:
+#       common.k8s.elastic.co/type: kibana
+#   egress:
+#     - toFQDNs:
+#         - matchName: "artifacts.security.elastic.co"
+#         - matchName: "epr.elastic.co"
+#         - matchName: "telemetry.elastic.co"
+#     - toEndpoints:
+#         - matchLabels:
+#             elasticsearch.k8s.elastic.co/cluster-name: elastic-cluster
+#       toPorts:
+#         - ports:
+#             - port: "9200"
+#               protocol: TCP
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata:
+#   name: allow-imds
+#   namespace: elastic
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-9"
+# spec:
+#   endpointSelector: {}
+#   egress:
+#     - toCIDR:
+#         - 169.254.169.254/32
+#       toPorts:
+#         - ports:
+#             - port: "80"
+#               protocol: TCP
+#             - port: "443"
+#               protocol: TCP
