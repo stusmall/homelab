@@ -218,7 +218,7 @@ spec:
 apiVersion: "cilium.io/v2"
 kind: CiliumClusterwideNetworkPolicy
 metadata:
-  name: "ingress-rule"
+  name: argocd-ingress
 spec:
   endpointSelector:
     matchExpressions:

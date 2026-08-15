@@ -20,4 +20,4 @@ spec:
   tls:
     - hosts:
         - keycloak.thenoodledragonlair.com
-      secretName: argocd-cert
+      secretName: keycloak-cert
