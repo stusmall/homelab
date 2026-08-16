@@ -12,9 +12,18 @@ spec:
     helm:
       values: |
         argo-cd:
+          global:
+            domain: argocd.thenoodledragonlair.com
           configs:
             params:
               server.insecure: true
+            cm:
+              oidc.config: |
+                name: Keycloak
+                issuer: https://keycloak.thenoodledragonlair.com/realms/standard-realm
+                clientID: argocd
+                clientSecret: $argocd-oidc-secret:clientSecret
+                requestedScopes: [openid, profile, email, groups]
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
