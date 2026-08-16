@@ -18,6 +18,7 @@ spec:
             params:
               server.insecure: true
             cm:
+              oidc.tls.insecure.skip.verify: true
               oidc.config: |
                 name: Keycloak
                 issuer: https://keycloak.thenoodledragonlair.com/realms/standard-realm
